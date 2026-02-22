@@ -17,5 +17,4 @@ chain = prompt | model | parser
 result = chain.invoke({"topic" : "nepal"})
 
 print(result)
-
-chain.get_graph().print_ascii()
+chain.get_graph()
