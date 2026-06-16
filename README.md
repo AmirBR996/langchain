@@ -1,4 +1,4 @@
-# LangChain Learning & Development Hub
+# LangChain (Generational AI)
 
 ![Python Version](https://img.shields.io/badge/Python-3.11%2B-blue)
 ![LangChain](https://img.shields.io/badge/LangChain-Latest-orange)
