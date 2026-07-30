@@ -9,9 +9,6 @@ from langchain_core.output_parsers import StrOutputParser
 from dotenv import load_dotenv
 load_dotenv()
 
-# ===============================
-# Step 1 — Transcript Ingestion
-# ===============================
 
 video_id = "Gfr50f6ZBvo"
 
@@ -25,9 +22,7 @@ except TranscriptsDisabled:
     print("No captions available for this video.")
     exit()
 
-# ===============================
-# Step 2 — Text Splitting
-# ===============================
+
 
 splitter = RecursiveCharacterTextSplitter(
     chunk_size=1000,
@@ -38,9 +33,6 @@ chunks = splitter.create_documents([transcript])
 
 print(f"Chunks created: {len(chunks)}\n")
 
-# ===============================
-# Step 3 — Embeddings
-# ===============================
 
 embeddings = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2"
@@ -48,27 +40,18 @@ embeddings = HuggingFaceEmbeddings(
 
 vector_store = FAISS.from_documents(chunks, embeddings)
 
-# ===============================
-# Step 4 — Retriever
-# ===============================
+
 
 retriever = vector_store.as_retriever(
     search_type="similarity",
     search_kwargs={"k": 4}
 )
 
-# ===============================
-# Step 5 — Groq LLM
-# ===============================
 
 llm = ChatGroq(
     model="llama-3.3-70b-versatile",
     temperature=0
 )
-
-# ===============================
-# Step 6 — Prompt
-# ===============================
 
 prompt = PromptTemplate(
     template="""
@@ -84,16 +67,8 @@ Question:
     input_variables=["context", "question"]
 )
 
-# ===============================
-# Step 7 — Formatting Function
-# ===============================
-
 def format_docs(docs):
     return "\n\n".join(doc.page_content for doc in docs)
-
-# ===============================
-# Step 8 — RAG Chain
-# ===============================
 
 parallel_chain = RunnableParallel({
     "context": retriever | RunnableLambda(format_docs),
@@ -104,9 +79,6 @@ parser = StrOutputParser()
 
 main_chain = parallel_chain | prompt | llm | parser
 
-# ===============================
-# Step 9 — Chat Loop
-# ===============================
 
 print("🎥 YouTube RAG Chatbot Ready")
 print("Type 'exit' to quit\n")
