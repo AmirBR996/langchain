@@ -1,36 +1,48 @@
-# LangChain (Generational AI)
+# LangChain Essentials & Advanced LLM Patterns
 
-![Python Version](https://img.shields.io/badge/Python-3.11%2B-blue)
-![LangChain](https://img.shields.io/badge/LangChain-Latest-orange)
-![License](https://img.shields.io/badge/License-MIT-green)
+[![Python Version](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![LangChain](https://img.shields.io/badge/LangChain-v0.3%2B-121011?style=flat-square&logo=chainlink&logoColor=white)](https://python.langchain.com/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Active_Development-brightgreen?style=flat-square)]()
 
-A comprehensive educational and development repository for mastering LangChain, a framework for developing applications powered by Large Language Models (LLMs). This project provides practical examples and implementations across all major LangChain components.
+A production-grade, educational repository designed to master modern Large Language Model (LLM) orchestration using **LangChain**. This project covers everything from core provider integrations to advanced Retrieval-Augmented Generation (RAG), LangChain Expression Language (LCEL), custom tools, and human-in-the-loop (HITL) guardrails.
 
-## Table of Contents
+---
 
-- [Overview](#overview)
-- [Features](#features)
-- [Project Structure](#project-structure)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Quick Start](#quick-start)
-- [Module Guide](#module-guide)
-- [Usage Examples](#usage-examples)
-- [Technologies Used](#technologies-used)
-- [Contributing](#contributing)
-- [Future Improvements](#future-improvements)
+## 📋 Table of Contents
 
-## Overview
+- [Overview](#-overview)
+- [Architecture & Key Concepts](#-architecture--key-concepts)
+- [Repository Structure](#-repository-structure)
+- [Prerequisites](#-prerequisites)
+- [Getting Started](#-getting-started)
+- [Module Deep Dive](#-module-deep-dive)
+  - [1. Core Provider Integrations](#1-core-provider-integrations)
+  - [2. Prompt Engineering & Templates](#2-prompt-engineering--templates)
+  - [3. Structured Outputs & Parsing](#3-structured-outputs--parsing)
+  - [4. LCEL & Chains](#4-lcel--chains)
+  - [5. RAG Pipeline (Loaders, Splitters, Vector Stores)](#5-rag-pipeline)
+  - [6. Tools & Agents](#6-tools--agents)
+  - [7. Guardrails & Evaluation](#7-guardrails--evaluation)
+- [Contributing](#-contributing)
+- [License](#-license)
 
-This project serves as a complete learning hub for LangChain, covering everything from basic LLM integration to advanced concepts like Retrieval-Augmented Generation (RAG). It's designed for developers who want to:
+---
 
-- Understand LLM integration patterns
-- Learn prompt engineering and optimization
-- Build structured responses with type safety
-- Create complex LLM pipelines using chains and runnables
-- Implement RAG systems with document loading and text splitting
-- Handle various output formats and parsing strategies
+## 🚀 Overview
+
+This repository is built as a hands-on learning lab and reference implementation for developers building generative AI applications. Key learning outcomes include:
+
+* **Production-Ready Chains**: Building deterministic, type-safe pipelines using LCEL.
+* **Structured Data Extraction**: Forcing LLM responses into verified schema objects (`Pydantic`, `TypedDict`, `JSON`).
+* **End-to-End RAG Systems**: Implementing context-aware document loading, advanced text chunking, and semantic retrievers.
+* **Safety & Control**: Implementing guardrails, PII redaction, and Human-In-The-Loop (HITL) approval pipelines.
+
+---
+
+## 🏗 Architecture & Key Concepts
+
+The repository follows standard LangChain Expression Language (LCEL) execution patterns:
 
 ## Features
 
@@ -43,6 +55,10 @@ This project serves as a complete learning hub for LangChain, covering everythin
 - **Chain Patterns**: Simple, sequential, conditional, and parallel chains
 - **Advanced Runnables**: Lambda functions, parallel execution, branching, and passthrough
 - **RAG Implementation**: Document loading, semantic text splitting, and retrieval patterns
+- **Advanced Retrievers**: Contextual compression, MMR, multi-query, and Wikipedia retrieval
+- **Vector Stores**: Chroma and other vector database integrations
+- **Tools & Utilities**: Custom tool creation, currency conversion, and tool binding
+- **Guardrails & Evaluation**: PII redaction, HITL middleware, and model-based evaluation
 - **Interactive Learning**: Jupyter notebooks with practical exercises
 
 ## Project Structure
@@ -81,7 +97,7 @@ langchain/
 │   ├── runnable_sequence.py        # Sequential composition
 │   ├── runnable_parallel.py        # Parallel execution
 │   ├── runnable_lambda.py          # Custom callable integration
-│   ├── runnable_branch.py          # Conditional logic
+│   ├── Runnable_branch.py          # Conditional logic
 │   └── runnable_passthrough.py     # Input passthrough
 │
 ├── 7.RAG/                          # Retrieval-Augmented Generation
@@ -95,18 +111,45 @@ langchain/
 │   │   ├── cricket.txt             # Sample dataset
 │   │   └── data.csv                # Sample CSV data
 │   │
-│   └── Textsplittler/              # Text chunking strategies
-│       ├── length_based.py         # Fixed-length chunking
-│       ├── document_based.py       # Structure-preserving split
-│       ├── semantic_based.py       # Semantic similarity splitting
-│       └── Text_Structure_based.py # Document structure aware
+│   ├── Retriever/                  # Retrieval strategies
+│   │   ├── Contextual.py           # Contextual compression retriever
+│   │   ├── MMR.py                  # Maximal Marginal Relevance
+│   │   ├── multi-query-retriever.py # Multi-query retrieval
+│   │   ├── vector_Store_retriever.py # Vector store retriever
+│   │   └── wikipedia_retriever.py  # Wikipedia retriever
+│   │
+│   ├── Textsplittler/              # Text chunking strategies
+│   │   ├── length_based.py         # Fixed-length chunking
+│   │   ├── document_based.py       # Structure-preserving split
+│   │   ├── semantic_based.py       # Semantic similarity splitting
+│   │   ├── Text_Structure_based.py # Document structure aware
+│   │   └── tocviva.pdf             # Sample PDF document
+│   │
+│   └── Vector_store/               # Vector database integrations
+│       └── chroma.py               # Chroma vector store
+│
+├── 8.Tools/                        # LangChain tools and utilities
+│   ├── currency_converter.py       # Currency conversion tool
+│   ├── tool_binding.py             # Tool binding examples
+│   └── Custom_Tools.ipynb          # Custom tools notebook
+│
+├── Guardrials/                     # Guardrails and evaluation
+│   ├── built-in-guardrials.py      # Built-in guardrails
+│   ├── custom(after).py            # Custom guardrails (after)
+│   ├── custom(before).py           # Custom guardrails (before)
+│   ├── deterministic.py            # Deterministic evaluation
+│   ├── health-care-chatbot.py      # Healthcare chatbot example
+│   ├── HITL-middleware.py          # Human-in-the-loop middleware
+│   └── Model-based-approach.py     # Model-based guardrails
 │
 ├── colab/                          # Jupyter notebooks
 │   ├── langchain_chainproblem_at_begining.ipynb
-│   └── Runnables_in_langchain.ipynb
+│   ├── Runnables_in_langchain.ipynb
+│   └── Built_in_tool_in_langchain.ipynb
 │
 ├── myvenv/                         # Python virtual environment
 ├── requirement.txt                 # Project dependencies
+├── Youtube_chatbot.py              # YouTube transcript chatbot
 └── .env                            # Environment variables (not included)
 ```
 
@@ -376,6 +419,101 @@ chunks = splitter.split_text(long_text)
 
 ---
 
+### 8. **Tools** (`8.Tools/`)
+
+Integrate LangChain tools for external API calls and utility functions.
+
+**Capabilities:**
+- Custom tool definitions using `@tool` decorator
+- Tool binding and invocation patterns
+- Real-world utility examples (currency conversion)
+
+**Example:**
+```python
+from langchain_core.tools import tool
+from langchain_groq import ChatGroq
+
+@tool
+def multiply(a: int, b: int) -> int:
+    """Multiplies two numbers."""
+    return a * b
+
+llm = ChatGroq(model="llama-3.3-70b-versatile")
+llm_with_tools = llm.bind_tools([multiply])
+```
+
+---
+
+### 9. **RAG Retrievers** (`7.RAG/Retriever/`)
+
+Advanced retrieval strategies for RAG systems.
+
+**Retriever Types:**
+- **Contextual Compression**: Filter relevant content using LLM
+- **MMR (Maximal Marginal Relevance)**: Balance relevance and diversity
+- **Multi-Query**: Generate multiple query perspectives
+- **Vector Store Retriever**: Direct vector similarity search
+- **Wikipedia Retriever**: Query Wikipedia knowledge base
+
+**Example:**
+```python
+from langchain_classic.retrievers.multi_query import MultiQueryRetriever
+from langchain_community.vectorstores import FAISS
+
+base_retriever = vectorstore.as_retriever()
+retriever = MultiQueryRetriever.from_llm(
+    retriever=base_retriever,
+    llm=llm
+)
+docs = retriever.invoke("What is Nepal?")
+```
+
+---
+
+### 10. **Vector Stores** (`7.RAG/Vector_store/`)
+
+Persist and query embeddings using vector databases.
+
+**Supported Backends:**
+- **Chroma**: Open-source embedding database
+
+**Example:**
+```python
+from langchain_community.vectorstores import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
+
+embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+vectorstore = Chroma.from_documents(documents, embeddings)
+retriever = vectorstore.as_retriever()
+```
+
+---
+
+### 11. **Guardrails / Evaluation** (`Guardrials/`)
+
+Ensure LLM outputs are safe, accurate, and aligned with requirements.
+
+**Guardrail Types:**
+- **Built-in Guardrails**: PII redaction, topic restriction
+- **Custom Guardrails**: Before/after processing hooks
+- **Human-in-the-Loop (HITL)**: Human approval middleware
+- **Model-based Approach**: LLM-as-judge evaluation
+- **Deterministic Checks**: Rule-based validation
+
+**Example:**
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import PIIMiddleware
+
+agent = create_agent(
+    model=llm,
+    tools=[customer_lookup],
+    middleware=[PIIMiddleware()]
+)
+```
+
+---
+
 ## Usage Examples
 
 ### Example 1: Fact Generation Chain
@@ -447,14 +585,22 @@ result = chain.invoke({"topic": "programming"})
 - **LangChain** (v0.1+): LLM application framework
 - **LangChain-Core**: Base abstractions
 - **LangChain-Community**: Third-party integrations
+- **LangChain-Experimental**: Advanced features (semantic chunking, etc.)
+- **LangChain-Classic**: Classic retrievers and agents
 
 ### LLM Providers
 - **Google Gemini** (via `langchain-google-genai`)
 - **Groq Llama** (via `langchain-groq`)
 
+### Embeddings & Vector Stores
+- **HuggingFace Embeddings** (via `langchain-huggingface`)
+- **OpenAI Embeddings** (via `langchain-openai`)
+- **Chroma**: Vector database for embeddings
+
 ### Utilities
 - **Pydantic**: Data validation and settings management
 - **python-dotenv**: Environment variable management
+- **youtube-transcript-api**: YouTube transcript fetching
 - **Grandalf**: Graph visualization (optional)
 
 ### Development Tools
@@ -490,6 +636,29 @@ python 7.RAG/Document_Loader/csv_loader.py
 python 7.RAG/Textsplittler/semantic_based.py
 ```
 
+### RAG Retriever Examples
+```bash
+python 7.RAG/Retriever/multi-query-retriever.py
+python 7.RAG/Retriever/wikipedia_retriever.py
+```
+
+### Vector Store Examples
+```bash
+python 7.RAG/Vector_store/chroma.py
+```
+
+### Tools Examples
+```bash
+python 8.Tools/currency_converter.py
+python 8.Tools/tool_binding.py
+```
+
+### Guardrails Examples
+```bash
+python Guardrials/built-in-guardrials.py
+python Guardrials/health-care-chatbot.py
+```
+
 ## Contributing
 
 This is a learning/personal project. Feel free to:
@@ -500,11 +669,11 @@ This is a learning/personal project. Feel free to:
 
 ## Future Improvements
 
-- [ ] Vector database integration (chromadb, Pinecone, Weaviate)
-- [ ] Advanced RAG with similarity search
+- [x] Vector database integration (Chroma)
+- [x] Advanced RAG with similarity search
+- [x] Function calling/tool use examples
 - [ ] Memory/conversation management examples
 - [ ] Agent framework implementation
-- [ ] Function calling/tool use examples
 - [ ] Streaming response handling
 - [ ] Performance optimization guide
 - [ ] Testing strategies and examples
@@ -512,6 +681,8 @@ This is a learning/personal project. Feel free to:
 - [ ] Advanced error handling and retry logic
 - [ ] Cost optimization examples
 - [ ] Extended documentation with theory
+- [ ] Guardrails and evaluation frameworks
+- [ ] YouTube transcript RAG chatbot
 
 ## Resources
 
