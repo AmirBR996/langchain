@@ -9,26 +9,6 @@ A production-grade, educational repository designed to master modern Large Langu
 
 ---
 
-## 📋 Table of Contents
-
-- [Overview](#-overview)
-- [Architecture & Key Concepts](#-architecture--key-concepts)
-- [Repository Structure](#-repository-structure)
-- [Prerequisites](#-prerequisites)
-- [Getting Started](#-getting-started)
-- [Module Deep Dive](#-module-deep-dive)
-  - [1. Core Provider Integrations](#1-core-provider-integrations)
-  - [2. Prompt Engineering & Templates](#2-prompt-engineering--templates)
-  - [3. Structured Outputs & Parsing](#3-structured-outputs--parsing)
-  - [4. LCEL & Chains](#4-lcel--chains)
-  - [5. RAG Pipeline (Loaders, Splitters, Vector Stores)](#5-rag-pipeline)
-  - [6. Tools & Agents](#6-tools--agents)
-  - [7. Guardrails & Evaluation](#7-guardrails--evaluation)
-- [Contributing](#-contributing)
-- [License](#-license)
-
----
-
 ## 🚀 Overview
 
 This repository is built as a hands-on learning lab and reference implementation for developers building generative AI applications. Key learning outcomes include:
@@ -39,10 +19,6 @@ This repository is built as a hands-on learning lab and reference implementation
 * **Safety & Control**: Implementing guardrails, PII redaction, and Human-In-The-Loop (HITL) approval pipelines.
 
 ---
-
-## 🏗 Architecture & Key Concepts
-
-The repository follows standard LangChain Expression Language (LCEL) execution patterns:
 
 ## Features
 
